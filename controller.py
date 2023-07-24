@@ -1,3 +1,4 @@
+from webscraper import newBooks
 from view import ui
 import subprocess
 

@@ -1,9 +1,9 @@
 import re
-from selenium import webdriver
 import json
 import shutil
 import datetime
 import requests
+import os.path
 from bs4 import BeautifulSoup
 
 copyFolderName = "files/"
@@ -88,14 +88,21 @@ def newBooks():
     ]
     filename = "currentbooks.json"
 
-    _copyFile(filename)
+    oldFileExists = os.path.isfile(filename)
+
+    if oldFileExists:
+        _copyFile(filename)
+        oldBibliography = _getOldData(filename)
 
     bibliography = _getNewDataFromWebsite(authors)
-    oldBibliography = _getOldData(filename)
 
     _generateFile(bibliography, filename)
 
-    if bibliography == oldBibliography:
+    if not oldFileExists:
+        print("no old json available")
+        return [False]
+    elif bibliography == oldBibliography:
+        print("looks like there is nothing new")
         return [False]
     else:
         print("we have a new book")
