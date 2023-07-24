@@ -3,6 +3,8 @@ from selenium import webdriver
 import json
 import shutil
 import datetime
+import requests
+from bs4 import BeautifulSoup
 
 copyFolderName = "files/"
 
@@ -29,7 +31,14 @@ def _getNewBooks(authors, bibliography, oldBibliography):
         books = bibliography[author]
 
         for book in books:
-            if not book in oldBibliography[author]:
+            if not author in oldBibliography:
+                authorString = author.split("-")
+                authorString = [word.capitalize() for word in authorString]
+                authorString = " ".join(authorString)
+
+                new_books.append(authorString + " - " + book)
+
+            elif not book in oldBibliography[author]:
                 authorString = author.split("-")
                 authorString = [word.capitalize() for word in authorString]
                 authorString = " ".join(authorString)
@@ -38,20 +47,16 @@ def _getNewBooks(authors, bibliography, oldBibliography):
     return new_books
 
 
-def _getNewDataFromSite(authors):
+def _getNewDataFromWebsite(authors):
     bibliography = json.loads("""{}""")
-    url2 = "https://www.bookseriesinorder.com/"
-    xpath2 = '//*[@class="booktitle"]'
-
-    driver = webdriver.Chrome()
+    url = "https://www.bookseriesinorder.com/"
 
     for author in authors:
         books = []
 
-        driver.get(url2 + author)
-
-        elements = driver.find_elements("xpath", xpath2)
-
+        page = requests.get(url + author)
+        soup = BeautifulSoup(page.content, "html.parser")
+        elements = soup.find_all("td", class_="booktitle")
         for element in elements:
             # Extract the text from the element
             fullTitle = element.text
@@ -79,12 +84,13 @@ def newBooks():
         "adrian-tchaikovsky",
         "elizabeth-strout",
         "james-s-a-corey",
+        "sally-rooney",
     ]
     filename = "currentbooks.json"
 
     _copyFile(filename)
 
-    bibliography = _getNewDataFromSite(authors)
+    bibliography = _getNewDataFromWebsite(authors)
     oldBibliography = _getOldData(filename)
 
     _generateFile(bibliography, filename)
