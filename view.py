@@ -4,8 +4,8 @@ from tkinter import *
 def ui(newBooks):
     root = Tk()
 
-    myLabel = Label(root, text="Any new books?", font=("Helvetica", 14))
-    myLabel.pack(padx=10, pady=10)
+    headline = Label(root, text="Any new books?", font=("Helvetica", 14))
+    headline.pack(padx=10, pady=10)
 
     if newBooks[0]:
         yesBooksLabel = Label(root, text="We have new books!", foreground="green")

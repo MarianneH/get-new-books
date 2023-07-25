@@ -6,13 +6,15 @@ import requests
 import os.path
 from bs4 import BeautifulSoup
 
-copyFolderName = "files/"
-
 
 def _copyFile(filename):
+    copyFolderName = "files/"
     original = filename
     target = (
-        copyFolderName + datetime.date.today().strftime("%d-%m-%Y") + "_old_books.json"
+        copyFolderName
+        + "_old_books"
+        + datetime.date.today().strftime("%d-%m-%Y")
+        + ".json"
     )
 
     shutil.copyfile(original, target)
@@ -108,10 +110,13 @@ def newBooks():
         print("we have a new book")
 
         newBooks = _getNewBooks(authors, bibliography, oldBibliography)
+        newBooksFolder = "newbooks/"
+
         newBooksFilename = (
-            copyFolderName
+            newBooksFolder
+            + "_new_books"
             + datetime.date.today().strftime("%d-%m-%Y")
-            + "_new_books.json"
+            + ".json"
         )
 
         _generateFile(newBooks, newBooksFilename)

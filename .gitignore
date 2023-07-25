@@ -7,7 +7,12 @@ __pycache__/
 *.so
 
 # generated files folder
-files/
+files/*
+!files/.gitkeep 
+
+# generated files folder
+newbooks/*
+!newbooks/.gitkeep 
 
 # Distribution / packaging
 .Python
