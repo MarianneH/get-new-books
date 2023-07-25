@@ -12,18 +12,16 @@ A python application that lets you check for new books for you favorite writers.
 
 ## Run it
 
-Make sure python is installed
+### Install python
+
 `python`
 
-Install relevant modules
+### Install relevant modules
 
-- BeautifulSoup:
-  `pip install bs4`
+`pip install -r requirements.txt`
 
-- Requests:
-  `pip install requests`
+### Run it:
 
-Run it:
 `py controller.py`
 
-Alternatively you can double-click on webscraper.bat
+Alternatively you can double-click on `webscraper.bat`
