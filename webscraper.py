@@ -12,7 +12,7 @@ def _copyFile(filename):
     original = filename
     target = (
         copyFolderName
-        + "_old_books"
+        + "old_books_"
         + datetime.date.today().strftime("%d-%m-%Y")
         + ".json"
     )
@@ -114,7 +114,7 @@ def newBooks():
 
         newBooksFilename = (
             newBooksFolder
-            + "_new_books"
+            + "new_books_"
             + datetime.date.today().strftime("%d-%m-%Y")
             + ".json"
         )
